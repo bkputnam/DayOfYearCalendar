@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<title>Day Of Year Calendar</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script>
+
+			var daysInMonth = [
+				{month: "Jan", days: 31},
+				{month: "Feb", days: 28},
+				{month: "Mar", days: 31},
+				{month: "Apr", days: 30},
+				{month: "May", days: 31},
+				{month: "Jun", days: 30},
+				{month: "Jul", days: 31},
+				{month: "Aug", days: 31},
+				{month: "Sep", days: 30},
+				{month: "Oct", days: 31},
+				{month: "Nov", days: 30},
+				{month: "Dev", days: 31}
+			];
+
+			var daysInMonth_leapYear = [
+				{month: "Jan", days: 31},
+				{month: "Feb", days: 29},
+				{month: "Mar", days: 31},
+				{month: "Apr", days: 30},
+				{month: "May", days: 31},
+				{month: "Jun", days: 30},
+				{month: "Jul", days: 31},
+				{month: "Aug", days: 31},
+				{month: "Sep", days: 30},
+				{month: "Oct", days: 31},
+				{month: "Nov", days: 30},
+				{month: "Dev", days: 31}
+			];
+
+			function dayArray(numDays) {
+				var result = [];
+				for (var i=1; i<=numDays; i++) {
+					result.push(i);
+				}
+				return result;
+			}
+
+			function buildCalendarTable(id, daysInMonth) {
+				var $table = $("#" + id);
+
+				var dayOfYear = 1;
+				$table.append(
+					daysInMonth.map(function(monthInfo) {
+						return $("<tr>").append(
+							$("<th>").text(monthInfo.month),
+							dayArray(monthInfo.days).map(function(dayOfMonth) {
+								return $("<td>").append(
+									$("<span class='day-of-month'>").text(dayOfMonth),
+									$("<br>"),
+									$("<span class='day-of-year'>").text(dayOfYear++)
+								);
+							})
+						);
+					})
+				);
+			}
+
+			$(function() {
+				buildCalendarTable("normal-year", daysInMonth);
+				buildCalendarTable("leap-year", daysInMonth_leapYear);
+			})
+
+		</script>
+		<style>
+			.day-of-month {
+				font-weight: bold;
+			}
+
+			table {
+				border-collapse: collapse;
+			}
+
+			td {
+				padding: 3px 5px 3px 3px;
+			}
+
+			tr:nth-child(even) {
+				background-color: #CCC;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Most Years</h1>
+		<table id="normal-year" ></table>
+
+		<h1>Leap Years</h1>
+		<table id="leap-year"></table>
+	</body>
+</html>
